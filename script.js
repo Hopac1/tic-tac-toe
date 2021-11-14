@@ -1,10 +1,5 @@
-// game board
-// two players
-
-
 // players to be stored in objects
- // this should be a factory function
- const Player = function(name, sign) {
+const Player = function(name, sign) {
     const playerInfo = {name: name, sign: sign};
     return playerInfo;
  }
@@ -32,12 +27,16 @@ const gameBoard = (function() {
     function storeSelection(event) {
         // Get index of clicked cell, need to add X/O to boardArray, then render() 
         let index = Array.from(event.target.parentElement.children).indexOf(event.target);
-        console.log(index); // FOR DEBUGGING - TO BE REMOVED
-        console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
-        boardArray[index] = currentPlayer.sign; // Replace "X" with current player (O or X)
-        changeTurn(currentPlayer)// change currentPlayer to other player
-        console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
-        _render();
+        if (isCellAlreadyClicked(index)) {
+            console.log(index); // FOR DEBUGGING - TO BE REMOVED
+            console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
+            boardArray[index] = currentPlayer.sign; // Replace "X" with current player (O or X)
+            changeTurn(currentPlayer)// change currentPlayer to other player
+            console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
+            _render();
+        } else {
+            return;
+        }
     }
 
     function _render() {
@@ -55,6 +54,21 @@ const gameBoard = (function() {
             return currentPlayer = playerOne;
         }
     }
-    return storeSelection, changeTurn
+
+    function isCellAlreadyClicked(cellIndex) {
+        if (boardArray[cellIndex] === "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function clearBoard() {
+        boardArray = ["", "", "",
+                     "", "", "",
+                     "", "", "",];
+        _render()
+    }
+    return {storeSelection, changeTurn, clearBoard}
 })();
 

@@ -18,7 +18,9 @@ const gameBoard = (function() {
                      "", "", "",];
 
     const playerOne = Player("playerOne", "X");
+    let playerOneArr = [];
     const playerTwo = Player("playerTwo", "O");
+    let playerTwoArr = [];
     let currentPlayer = playerOne;
     
     // Listen for user click
@@ -31,9 +33,11 @@ const gameBoard = (function() {
             console.log(index); // FOR DEBUGGING - TO BE REMOVED
             console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
             boardArray[index] = currentPlayer.sign; // Replace "X" with current player (O or X)
-            changeTurn(currentPlayer)// change currentPlayer to other player
-            console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
             _render();
+            let isWinner = checkForWin(index);
+            console.log(isWinner)
+            changeTurn(currentPlayer) // change currentPlayer to other player
+            console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
         } else {
             return;
         }
@@ -67,8 +71,32 @@ const gameBoard = (function() {
         boardArray = ["", "", "",
                      "", "", "",
                      "", "", "",];
-        _render()
+        _render();
     }
-    return {storeSelection, changeTurn, clearBoard}
+
+    function checkForWin() {
+        const winConditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
+                         [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                         [0, 4, 8], [2, 4, 6]];
+        
+        function winFactory(aSign) {
+            return winConditions.some((winCondition) => {
+                return winCondition.every((threeMarks) => {
+                    return boardArray[threeMarks] === aSign;
+                });
+            });
+        }
+        // some(), every()
+        //Iterate over winConditions array, each element is a single win condition.
+        const didXWin = winFactory("X");
+
+        const didOWin = winFactory("O");
+
+        return `X: ${didXWin} | O:${didOWin}`;
+        // For each win condition, check if each value is present in boardArray
+        // for X and O.
+        // some() on winConditions array, every() for each element inside each array element
+    }
+    return {storeSelection, changeTurn, clearBoard};
 })();
 

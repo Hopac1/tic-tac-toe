@@ -35,7 +35,7 @@ const gameBoard = (function() {
             boardArray[index] = currentPlayer.sign; // Replace "X" with current player (O or X)
             _render();
             let isWinner = checkForWin(index);
-            console.log(isWinner)
+            console.log(isWinner) // FOR DEBUGGING - TO BE REMOVED
             changeTurn(currentPlayer) // change currentPlayer to other player
             console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
         } else {

@@ -29,25 +29,19 @@ const gameBoard = (function() {
     restartButton.addEventListener("click", clearBoard);
 
     function storeSelection(event) {
-        // Get index of clicked cell, need to add X/O to boardArray, then render() 
         let index = Array.from(event.target.parentElement.children).indexOf(event.target);
         if (isCellAlreadyClicked(index)) {
-            console.log(index); // FOR DEBUGGING - TO BE REMOVED
-            console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
-            boardArray[index] = currentPlayer.sign; // Replace "X" with current player (O or X)
+            boardArray[index] = currentPlayer.sign;
             _render();
             let isWinner = checkForWin(index);
             addScore(isWinner);
-            console.log(isWinner); // FOR DEBUGGING - TO BE REMOVED
-            changeTurn(currentPlayer); // change currentPlayer to other player
-            console.log(boardArray) // FOR DEBUGGING - TO BE REMOVED
+            changeTurn(currentPlayer);
         } else {
             return;
         };
     };
 
     function _render() {
-        // render boardArray data to DOM
         for (let i = 0; i < boardArray.length; i++) {
             gameGrid.children[i].textContent = boardArray[i];
         };

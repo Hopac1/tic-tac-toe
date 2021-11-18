@@ -4,7 +4,28 @@ body {
     font-family: 'Dongle', sans-serif;
 }
 
+button {
+    font-family: 'Dongle', sans-serif;
+    font-size: 2em;
+    border-radius: 10px;
+}
+
 /* GAME GRID */
+.restart {
+    position: absolute;
+    left: 30rem;
+    top: 50%;
+}
+
+.scores {
+    color: white;
+    font-size: 4em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 2rem;
+}
+
 .game-container {
     display: flex;
     border: 1px solid white;
